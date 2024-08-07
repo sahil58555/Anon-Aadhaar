@@ -4,7 +4,7 @@ import {
   useAnonAadhaar,
   useProver,
 } from "@anon-aadhaar/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type HomeProps = {
   setUseTestAadhaar: (state: boolean) => void;
@@ -15,16 +15,23 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
   // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
   const [, latestProof] = useProver();
+  const [countdown, setCountdown] = useState<number | null>(null);
 
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") {
-      console.log(anonAadhaar.status);
+      let count = 3;
+      setCountdown(count);
 
-      const timer = setTimeout(() => {
-        window.location.href = "https://blockpay-1.onrender.com/employee-dashboard";
-      }, 8000); // 10000 ms = 10 seconds
+      const interval = setInterval(() => {
+        count -= 1;
+        setCountdown(count);
+        if (count === 0) {
+          clearInterval(interval);
+          window.location.href = "https://blockpay-1.onrender.com/";
+        }
+      }, 1000); // Update every second
 
-      return () => clearTimeout(timer);
+      return () => clearInterval(interval);
     }
   }, [anonAadhaar]);
 
@@ -33,7 +40,7 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-8">
+    <div className="min-h-screen bg-gray-100 px-4 py-8 test">
       <main className="flex flex-col items-center gap-8 bg-white rounded-2xl max-w-screen-sm mx-auto h-[24rem] md:h-[20rem] p-8">
         <h1 className="font-bold text-2xl">Welcome to Anon Aadhaar Example</h1>
         <p>Prove your Identity anonymously using your Aadhaar card.</p>
@@ -71,6 +78,14 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
           </>
         )}
       </div>
+
+      {countdown !== null && (
+        <div className="absolute inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="text-white text-9xl font-bold animate-countdown">
+            {countdown}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
