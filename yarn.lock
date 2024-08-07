@@ -3589,7 +3589,7 @@ snarkjs@^0.7.3:
 
 "snarkjs@https://github.com/sampritipanda/snarkjs.git#fef81fc51d17a734637555c6edbd585ecda02d9e":
   version "0.5.0"
-  resolved "git+https://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:x-oauth-basic@github.com/sampritipanda/snarkjs.git#fef81fc51d17a734637555c6edbd585ecda02d9e"
+  resolved "git+https://{gt}:x-oauth-basic@github.com/sampritipanda/snarkjs.git#fef81fc51d17a734637555c6edbd585ecda02d9e"
   integrity sha512-3yEIM1XU1PvAZxpiF7jyVyardTdfvT7yVwkJ9XFiX2vO9deO4yTQSrkSD8r3FMjbL1L3+bk6YfIjhiMoD6i48g==
   dependencies:
     "@iden3/binfileutils" "0.0.11"
