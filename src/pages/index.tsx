@@ -27,7 +27,7 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
         setCountdown(count);
         if (count === 0) {
           clearInterval(interval);
-          window.location.href = "https://blockpay-1.onrender.com/";
+          window.location.href = "https://blockpay-1.onrender.com/employee-dashboard";
         }
       }, 1000); // Update every second
 
