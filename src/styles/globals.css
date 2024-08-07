@@ -17,7 +17,3 @@
 .animate-countdown {
   animation: countdownFade 1s linear infinite;
 }
-
-.test {
-    background-color: red;
-}

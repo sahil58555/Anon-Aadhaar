@@ -12,7 +12,6 @@ type HomeProps = {
 };
 
 export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
-  // Use the Country Identity hook to get the status of the user.
   const [anonAadhaar] = useAnonAadhaar();
   const [, latestProof] = useProver();
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -29,7 +28,7 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
           clearInterval(interval);
           window.location.href = "https://blockpay-1.onrender.com/employee-dashboard";
         }
-      }, 1000); // Update every second
+      }, 1000);
 
       return () => clearInterval(interval);
     }
@@ -40,47 +39,49 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-4 py-8 test">
-      <main className="flex flex-col items-center gap-8 bg-white rounded-2xl max-w-screen-sm mx-auto h-[24rem] md:h-[20rem] p-8">
-        <h1 className="font-bold text-2xl">Welcome to Anon Aadhaar Example</h1>
-        <p>Prove your Identity anonymously using your Aadhaar card.</p>
+    <div className="min-h-screen bg-gray-800 px-4 py-8 flex items-center justify-center">
+      <main className="flex flex-col items-center justify-center gap-6 bg-white rounded-xl shadow-lg max-w-lg mx-auto p-6 md:p-10">
+        <h1 className="text-3xl font-bold text-gray-800"><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-sky-500">Anon Aadhaar </span> Verification</h1>
+        <p className="text-gray-600 text-center">
+          Prove your identity anonymously using your Aadhaar card.
+        </p>
 
-        {/* Import the Connect Button component */}
         <LogInWithAnonAadhaar nullifierSeed={123} />
 
         {useTestAadhaar ? (
-          <p>
-            You&apos;re using the <strong> test </strong> Aadhaar mode
+          <p className="text-sm text-gray-500">
+            You&apos;re using the <strong>test</strong> Aadhaar mode
           </p>
         ) : (
-          <p>
-            You&apos;re using the <strong> real </strong> Aadhaar mode
+          <p className="text-sm text-gray-500">
+            You&apos;re using the <strong>real</strong> Aadhaar mode
           </p>
         )}
         <button
           onClick={switchAadhaar}
           type="button"
-          className="rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          className="rounded-md bg-blue-600 text-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-blue-700 transition-colors duration-200"
         >
-          Switch for {useTestAadhaar ? "real" : "test"}
+          Switch to {useTestAadhaar ? "real" : "test"} Aadhaar
         </button>
       </main>
-      <div className="flex flex-col items-center gap-4 rounded-2xl max-w-screen-sm mx-auto p-8">
-        {/* Render the proof if generated and valid */}
-        {anonAadhaar.status === "logged-in" && (
-          <>
-            <p>✅ Proof is valid</p>
-            <p>Got your Aadhaar Identity Proof</p>
-            <>Welcome anon!</>
-            {latestProof && (
-              <AnonAadhaarProof code={JSON.stringify(latestProof, null, 2)} />
-            )}
-          </>
-        )}
-      </div>
+
+      {anonAadhaar.status === "logged-in" && (
+        <div className="flex flex-col items-center mt-6">
+          <p className="text-green-600 font-semibold">✅ Proof is valid</p>
+          <p className="text-gray-600">Got your Aadhaar Identity Proof</p>
+          <p className="text-gray-800 font-medium">Welcome, anon!</p>
+          {latestProof && (
+            <AnonAadhaarProof
+              code={JSON.stringify(latestProof, null, 2)}
+              className="mt-4"
+            />
+          )}
+        </div>
+      )}
 
       {countdown !== null && (
-        <div className="absolute inset-0 flex justify-center items-center bg-gray-900 bg-opacity-50 z-50">
+        <div className="absolute inset-0 flex justify-center items-center bg-gray-900 bg-opacity-75 z-50">
           <div className="text-white text-9xl font-bold animate-countdown">
             {countdown}
           </div>
