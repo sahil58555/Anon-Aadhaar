@@ -19,6 +19,12 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") {
       console.log(anonAadhaar.status);
+
+      const timer = setTimeout(() => {
+        window.location.href = "https://blockpay-1.onrender.com/employee-dashboard";
+      }, 8000); // 10000 ms = 10 seconds
+
+      return () => clearTimeout(timer);
     }
   }, [anonAadhaar]);
 
@@ -33,7 +39,7 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
         <p>Prove your Identity anonymously using your Aadhaar card.</p>
 
         {/* Import the Connect Button component */}
-        <LogInWithAnonAadhaar nullifierSeed={1234} />
+        <LogInWithAnonAadhaar nullifierSeed={123} />
 
         {useTestAadhaar ? (
           <p>
