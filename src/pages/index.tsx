@@ -5,6 +5,7 @@ import {
   useProver,
 } from "@anon-aadhaar/react";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 type HomeProps = {
   setUseTestAadhaar: (state: boolean) => void;
@@ -16,10 +17,31 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
   const [, latestProof] = useProver();
   const [countdown, setCountdown] = useState<number | null>(null);
 
+  const updateEmployeeAadhaarStatus = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const url = "https://blockpay-x05c.onrender.com/aadhaar/update-status";
+      const res = await axios.post(
+        url,
+        {
+          status: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     if (anonAadhaar.status === "logged-in") {
       let count = 3;
       setCountdown(count);
+      updateEmployeeAadhaarStatus();
 
       const interval = setInterval(() => {
         count -= 1;
