@@ -6,6 +6,7 @@ import {
 } from "@anon-aadhaar/react";
 import { useEffect, useState } from "react";
 
+
 type HomeProps = {
   setUseTestAadhaar: (state: boolean) => void;
   useTestAadhaar: boolean;
@@ -39,33 +40,35 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-800 px-4 py-8 flex items-center justify-center">
-      <main className="flex flex-col items-center justify-center gap-6 bg-white rounded-xl shadow-lg max-w-lg mx-auto p-6 md:p-10">
-        <h1 className="text-3xl font-bold text-gray-800"><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-sky-500">Anon Aadhaar </span> Verification</h1>
-        <p className="text-gray-600 text-center">
-          Prove your identity anonymously using your Aadhaar card.
-        </p>
+    <div className="min-h-screen bg-gray-900 px-4 py-8 flex items-center justify-center">
+      <div className="mih-h-[50vh] min-w-[40vw] flex flex-col justify-center items-center bg-gray-200 rounded-lg gap-10 md:p-10 p-6">
+        <div className="typewriter-text">
+          <h1 className="text-5xl font-bold text-gray-800 text-center"><span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-sky-500 ">Anon Aadhaar </span> Verification</h1>
+          <p className="text-gray-600 text-center overflow-hidden text-xl">
+            Prove your identity anonymously using your Aadhaar card.
+          </p>
+        </div>
 
         <LogInWithAnonAadhaar nullifierSeed={123} />
 
         {useTestAadhaar ? (
-          <p className="text-sm text-gray-500">
+          <p className="text-md text-gray-500">
             You&apos;re using the <strong>test</strong> Aadhaar mode
           </p>
         ) : (
-          <p className="text-sm text-gray-500">
+          <p className="text-md text-gray-500">
             You&apos;re using the <strong>real</strong> Aadhaar mode
           </p>
         )}
         <button
           onClick={switchAadhaar}
           type="button"
-          className="rounded-md bg-blue-600 text-white px-4 py-2 text-sm font-semibold shadow-sm hover:bg-blue-700 transition-colors duration-200"
+          className="rounded-md bg-gradient-to-r from-orange-400 via-gray-100 to-green-400 text-black px-4 py-2 text-md font-semibold shadow-sm transition-colors duration-200"
         >
           Switch to {useTestAadhaar ? "real" : "test"} Aadhaar
         </button>
-      </main>
 
+      </div>
       {anonAadhaar.status === "logged-in" && (
         <div className="flex flex-col items-center mt-6">
           <p className="text-green-600 font-semibold">✅ Proof is valid</p>
@@ -74,7 +77,6 @@ export default function Home({ setUseTestAadhaar, useTestAadhaar }: HomeProps) {
           {latestProof && (
             <AnonAadhaarProof
               code={JSON.stringify(latestProof, null, 2)}
-              className="mt-4"
             />
           )}
         </div>
